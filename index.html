@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pen</title>
+  </head>
+  <body>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
+<div class="app">
+
+  <h1>YAPES DEL DÍA</h1>
+
+  <p id="fecha"></p>
+
+  <div id="contador">0</div>
+
+  <input
+    id="monto"
+    type="number"
+    placeholder="Monto del Yape"
+    step="0.01"
+  >
+
+  <button id="sumar">+ YAPE</button>
+
+  <button id="restar">−</button>
+
+  <button id="deshacer">↩️ DESHACER ÚLTIMO YAPE</button>
+
+  <p>Total de Yapes: <span id="total">0</span></p>
+
+  <p>Dinero recibido: S/ <span id="dinero">0.00</span></p>
+
+  <div class="resumen">
+
+    <div>
+      <span>YAPES</span>
+      <strong id="resumenYapes">0</strong>
+    </div>
+
+    <div>
+      <span>TOTAL</span>
+      <strong>S/ <span id="resumenDinero">0.00</span></strong>
+    </div>
+
+  </div>
+
+  <h2>REGISTROS</h2>
+
+  <ul id="lista"></ul>
+
+  <button id="reiniciar">REINICIAR DÍA</button>
+
+  <button id="exportar">EXPORTAR DÍA</button>
+
+  <button id="historial">📅 VER HISTORIAL</button>
+
+  <div id="historialLista"></div>
+
+</div>
