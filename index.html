@@ -8,19 +8,20 @@
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="stylesheet" href="./style.css">
-  <title>Yapes del Día</title>
+  <title>Arqueo del Día</title>
 </head>
 <body>
 
 <div class="app">
 
-  <!-- Cabecera -->
   <header class="topbar">
     <div>
-      <p class="hello">Mi negocio</p>
-      <h1>Yapes del día</h1>
+      <p id="fecha" class="fecha"></p>
+      <h1>Arqueo del día</h1>
     </div>
-    <p id="fecha" class="fecha"></p>
+    <button id="btnMas" class="icon-btn" aria-label="Más opciones">
+      <svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg>
+    </button>
   </header>
 
   <main>
@@ -29,92 +30,209 @@
     <section class="view active" id="view-inicio">
 
       <div class="balance">
-        <span class="balance-label">Dinero recibido hoy</span>
-        <div class="balance-amount"><small>S/</small> <span id="dinero">0.00</span></div>
+        <span class="balance-label">Ventas del día</span>
+        <div class="balance-amount"><small>S/</small> <span id="ventasTotal">0.00</span></div>
         <div class="balance-foot">
-          <div class="pill"><span id="contador">0</span> yapes</div>
-          <div class="pill soft">Promedio S/ <span id="promedio">0.00</span></div>
+          <div class="pill"><span id="nVentas">0</span> ventas</div>
+          <div class="pill soft">Resultado S/ <span id="resultado">0.00</span></div>
         </div>
       </div>
 
+      <div class="grid4">
+        <div class="mini-card"><span class="dot yape"></span><small>Yapes</small><b>S/ <span id="miYape">0.00</span></b></div>
+        <div class="mini-card"><span class="dot cash"></span><small>Efectivo</small><b>S/ <span id="miEfectivo">0.00</span></b></div>
+        <div class="mini-card"><span class="dot out"></span><small>Pagos</small><b>S/ <span id="miPagos">0.00</span></b></div>
+        <div class="mini-card"><span class="dot box"></span><small>En caja</small><b>S/ <span id="miCaja">0.00</span></b></div>
+      </div>
+
+      <h2>Movimientos de hoy</h2>
+      <ul id="lista"></ul>
+    </section>
+
+    <!-- ===== YAPES ===== -->
+    <section class="view" id="view-yapes">
+      <h2>Yapes</h2>
+
       <div class="card">
+        <div class="chips">
+          <div class="chip"><span id="contador">0</span> yapes</div>
+          <div class="chip soft">S/ <span id="dinero">0.00</span></div>
+        </div>
+
         <label class="field-label" for="monto">Monto del Yape</label>
         <div class="amount-box">
           <span>S/</span>
           <input id="monto" type="number" inputmode="decimal" placeholder="0.00" step="0.01" min="0">
         </div>
+        <input id="notaYape" class="text-input" type="text" placeholder="Nota (opcional): almuerzo, pedido de Ana…" maxlength="60">
 
         <div class="quick">
-          <button type="button" data-quick="5">+5</button>
-          <button type="button" data-quick="10">+10</button>
-          <button type="button" data-quick="20">+20</button>
-          <button type="button" data-quick="50">+50</button>
+          <button type="button" data-quick="5" data-target="monto">+5</button>
+          <button type="button" data-quick="10" data-target="monto">+10</button>
+          <button type="button" data-quick="20" data-target="monto">+20</button>
+          <button type="button" data-quick="50" data-target="monto">+50</button>
         </div>
 
         <button id="sumar" class="btn primary">+ YAPE</button>
-
         <div class="row">
           <button id="restar" class="btn ghost">− Devolución</button>
           <button id="deshacer" class="btn ghost">↩ Deshacer</button>
         </div>
       </div>
 
-      <div class="stats resumen">
-        <div>
-          <span>Yapes</span>
-          <strong id="resumenYapes">0</strong>
-        </div>
-        <div>
-          <span>Total</span>
-          <strong>S/ <span id="resumenDinero">0.00</span></strong>
+      <p class="mini">Total de Yapes: <span id="total">0</span></p>
+    </section>
+
+    <!-- ===== EFECTIVO ===== -->
+    <section class="view" id="view-efectivo">
+      <h2>Ventas en efectivo</h2>
+
+      <div class="card">
+        <label class="field-label" for="apertura">Caja inicial (sencillo con el que abres)</label>
+        <div class="amount-box small">
+          <span>S/</span>
+          <input id="apertura" type="number" inputmode="decimal" placeholder="0.00" step="0.01" min="0">
         </div>
       </div>
 
-      <p class="mini">Total de Yapes: <span id="total">0</span></p>
+      <div class="card">
+        <label class="field-label" for="montoEfectivo">Venta en efectivo</label>
+        <div class="amount-box">
+          <span>S/</span>
+          <input id="montoEfectivo" type="number" inputmode="decimal" placeholder="0.00" step="0.01" min="0">
+        </div>
+        <input id="notaEfectivo" class="text-input" type="text" placeholder="Nota (opcional)" maxlength="60">
 
+        <div class="quick">
+          <button type="button" data-quick="5" data-target="montoEfectivo">+5</button>
+          <button type="button" data-quick="10" data-target="montoEfectivo">+10</button>
+          <button type="button" data-quick="20" data-target="montoEfectivo">+20</button>
+          <button type="button" data-quick="50" data-target="montoEfectivo">+50</button>
+        </div>
+
+        <button id="sumarEfectivo" class="btn primary cash">+ VENTA EN EFECTIVO</button>
+        <button id="deshacerEfectivo" class="btn ghost">↩ Deshacer última venta</button>
+      </div>
+
+      <p class="mini">Ventas en efectivo hoy: S/ <span id="totalEfectivo">0.00</span> (<span id="nEfectivo">0</span>)</p>
     </section>
 
-    <!-- ===== REGISTROS ===== -->
-    <section class="view" id="view-registros">
-      <h2>Registros de hoy</h2>
-      <ul id="lista"></ul>
+    <!-- ===== PAGOS ===== -->
+    <section class="view" id="view-pagos">
+      <h2>Pagos a proveedores</h2>
+
+      <div class="card">
+        <label class="field-label" for="proveedor">Proveedor</label>
+        <input id="proveedor" class="text-input" type="text" list="proveedores" placeholder="Ej: Distribuidora Lima" maxlength="40" autocomplete="off">
+        <datalist id="proveedores"></datalist>
+
+        <label class="field-label" for="montoPago">Monto pagado</label>
+        <div class="amount-box">
+          <span>S/</span>
+          <input id="montoPago" type="number" inputmode="decimal" placeholder="0.00" step="0.01" min="0">
+        </div>
+
+        <label class="field-label">¿Cómo pagaste?</label>
+        <div class="segmented">
+          <label><input type="radio" name="metodo" value="efectivo" checked><span>💵 Efectivo</span></label>
+          <label><input type="radio" name="metodo" value="yape"><span>📱 Yape / Transf.</span></label>
+        </div>
+
+        <input id="notaPago" class="text-input" type="text" placeholder="Nota (opcional): factura, mercadería…" maxlength="60">
+
+        <button id="registrarPago" class="btn primary out">REGISTRAR PAGO</button>
+        <button id="deshacerPago" class="btn ghost">↩ Deshacer último pago</button>
+      </div>
+
+      <div class="stats">
+        <div><span>Pagado en efectivo</span><strong>S/ <span id="pagosEf">0.00</span></strong></div>
+        <div><span>Pagado digital</span><strong>S/ <span id="pagosDig">0.00</span></strong></div>
+      </div>
+
+      <h2>Por proveedor</h2>
+      <div id="resumenProv"></div>
     </section>
 
-    <!-- ===== HISTORIAL ===== -->
-    <section class="view" id="view-historial">
+    <!-- ===== ARQUEO ===== -->
+    <section class="view" id="view-arqueo">
+      <h2>Arqueo de caja</h2>
+
+      <div class="card">
+        <p class="card-title">Efectivo que debería haber</p>
+        <div class="line"><span>Caja inicial</span><b>S/ <span id="arqApertura">0.00</span></b></div>
+        <div class="line plus"><span>+ Ventas en efectivo</span><b>S/ <span id="arqEfectivo">0.00</span></b></div>
+        <div class="line minus"><span>− Pagos en efectivo</span><b>S/ <span id="arqPagos">0.00</span></b></div>
+        <div class="line total"><span>= Esperado en caja</span><b>S/ <span id="arqEsperado">0.00</span></b></div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Cuenta tu efectivo</p>
+        <div id="denoms"></div>
+        <div class="line total"><span>Total contado</span><b>S/ <span id="arqContado">0.00</span></b></div>
+        <button id="limpiarConteo" class="btn ghost">Limpiar conteo</button>
+      </div>
+
+      <div id="arqResultado" class="res">Cuenta tu efectivo para ver el resultado</div>
+
+      <div class="card">
+        <p class="card-title">Verifica tus Yapes</p>
+        <div class="line"><span>Registrado en esta app</span><b>S/ <span id="yapeRegistrado">0.00</span></b></div>
+        <label class="field-label" for="yapeApp">Total que ves en tu app de Yape</label>
+        <div class="amount-box small">
+          <span>S/</span>
+          <input id="yapeApp" type="number" inputmode="decimal" placeholder="0.00" step="0.01" min="0">
+        </div>
+        <div id="yapeResultado" class="res small"></div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Resultado del día</p>
+        <div class="line plus"><span>Ventas (Yape + efectivo)</span><b>S/ <span id="resVentas">0.00</span></b></div>
+        <div class="line minus"><span>Pagos a proveedores</span><b>S/ <span id="resPagos">0.00</span></b></div>
+        <div class="line total"><span>= Resultado</span><b>S/ <span id="resFinal">0.00</span></b></div>
+      </div>
+
+      <button id="compartir" class="btn primary">📤 Compartir resumen del día</button>
+    </section>
+
+    <!-- ===== MÁS ===== -->
+    <section class="view" id="view-mas">
       <h2>Historial</h2>
       <div id="historialLista"></div>
-    </section>
 
-    <!-- ===== AJUSTES ===== -->
-    <section class="view" id="view-ajustes">
       <h2>Ajustes</h2>
       <div class="card list-actions">
         <button id="modoOscuro" class="item">🌙 Modo oscuro</button>
-        <button id="exportar" class="item">📤 Exportar día</button>
+        <button id="exportar" class="item">📊 Exportar día (Excel)</button>
+        <button id="respaldar" class="item">💾 Descargar copia de seguridad</button>
+        <button id="restaurar" class="item">📥 Restaurar copia de seguridad</button>
+        <input id="archivoRespaldo" type="file" accept="application/json,.json" hidden>
         <button id="reiniciar" class="item danger">🗑️ Reiniciar día</button>
       </div>
     </section>
 
   </main>
 
-  <!-- Menú inferior -->
   <nav class="tabbar">
     <button class="tab active" data-tab="inicio">
       <svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>
       <span>Inicio</span>
     </button>
-    <button class="tab" data-tab="registros">
-      <svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
-      <span>Registros</span>
+    <button class="tab" data-tab="yapes">
+      <svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18h2"/></svg>
+      <span>Yapes</span>
     </button>
-    <button class="tab" data-tab="historial">
-      <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>
-      <span>Historial</span>
+    <button class="tab" data-tab="efectivo">
+      <svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2.5"/><circle cx="12" cy="12" r="2.5"/></svg>
+      <span>Efectivo</span>
     </button>
-    <button class="tab" data-tab="ajustes">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
-      <span>Ajustes</span>
+    <button class="tab" data-tab="pagos">
+      <svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg>
+      <span>Pagos</span>
+    </button>
+    <button class="tab" data-tab="arqueo">
+      <svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="3"/><path d="M8 7h8M8 12h.01M12 12h.01M16 12h.01M8 17h.01M12 17h.01M16 17h.01"/></svg>
+      <span>Arqueo</span>
     </button>
   </nav>
 
