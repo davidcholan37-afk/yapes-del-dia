@@ -15,6 +15,7 @@ window.addEventListener("load", function () {
   const reiniciar = document.getElementById("reiniciar");
   const exportar = document.getElementById("exportar");
   const historialBtn = document.getElementById("historial");
+  const modoOscuro = document.getElementById("modoOscuro");
 
   const lista = document.getElementById("lista");
   const historialLista = document.getElementById("historialLista");
@@ -186,25 +187,7 @@ window.addEventListener("load", function () {
     registros = [];
 
     actualizar();
-    mostrarHistorial();const modoOscuro = document.getElementById("modoOscuro");
-
-if (localStorage.getItem("modoOscuro") === "true") {
-  document.body.classList.add("oscuro");
-  modoOscuro.textContent = "☀️ Modo claro";
-}
-
-modoOscuro.addEventListener("click", function () {
-
-  document.body.classList.toggle("oscuro");
-
-  const oscuro = document.body.classList.contains("oscuro");
-
-  localStorage.setItem("modoOscuro", oscuro);
-
-  modoOscuro.textContent = oscuro
-    ? "☀️ Modo claro"
-    : "🌙 Modo oscuro";
-});
+    mostrarHistorial();
   });
 
   historialBtn.addEventListener("click", function () {
@@ -254,11 +237,33 @@ modoOscuro.addEventListener("click", function () {
     URL.revokeObjectURL(url);
   });
 
+  // 🌙 MODO OSCURO
+
+  if (modoOscuro) {
+
+    if (localStorage.getItem("modoOscuro") === "true") {
+      document.body.classList.add("oscuro");
+      modoOscuro.textContent = "☀️ Modo claro";
+    }
+
+    modoOscuro.addEventListener("click", function () {
+
+      document.body.classList.toggle("oscuro");
+
+      const oscuro =
+        document.body.classList.contains("oscuro");
+
+      localStorage.setItem("modoOscuro", oscuro);
+
+      modoOscuro.textContent =
+        oscuro
+          ? "☀️ Modo claro"
+          : "🌙 Modo oscuro";
+    });
+
+  }
+
   actualizar();
   mostrarHistorial();
-const modoOscuro = document.getElementById("modoOscuro");
 
-modoOscuro.addEventListener("click", function () {
-  document.body.classList.toggle("oscuro");
-});
 });
