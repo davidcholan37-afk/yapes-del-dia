@@ -186,7 +186,25 @@ window.addEventListener("load", function () {
     registros = [];
 
     actualizar();
-    mostrarHistorial();
+    mostrarHistorial();const modoOscuro = document.getElementById("modoOscuro");
+
+if (localStorage.getItem("modoOscuro") === "true") {
+  document.body.classList.add("oscuro");
+  modoOscuro.textContent = "☀️ Modo claro";
+}
+
+modoOscuro.addEventListener("click", function () {
+
+  document.body.classList.toggle("oscuro");
+
+  const oscuro = document.body.classList.contains("oscuro");
+
+  localStorage.setItem("modoOscuro", oscuro);
+
+  modoOscuro.textContent = oscuro
+    ? "☀️ Modo claro"
+    : "🌙 Modo oscuro";
+});
   });
 
   historialBtn.addEventListener("click", function () {
