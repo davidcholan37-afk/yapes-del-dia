@@ -1,65 +1,126 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="./style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pen</title>
-  </head>
-  <body>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#5b21b6">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="stylesheet" href="./style.css">
+  <title>Yapes del Día</title>
+</head>
+<body>
 
-    <script src="./script.js"></script>
-  </body>
-</html>
 <div class="app">
 
-  <h1>YAPES DEL DÍA</h1>
-<button id="modoOscuro">🌙 Modo oscuro</button>
-  <p id="fecha"></p>
-
-  <div id="contador">0</div>
-
-  <input
-    id="monto"
-    type="number"
-    placeholder="Monto del Yape"
-    step="0.01"
-  >
-
-  <button id="sumar">+ YAPE</button>
-
-  <button id="restar">−</button>
-
-  <button id="deshacer">↩️ DESHACER ÚLTIMO YAPE</button>
-
-  <p>Total de Yapes: <span id="total">0</span></p>
-
-  <p>Dinero recibido: S/ <span id="dinero">0.00</span></p>
-
-  <div class="resumen">
-
+  <!-- Cabecera -->
+  <header class="topbar">
     <div>
-      <span>YAPES</span>
-      <strong id="resumenYapes">0</strong>
+      <p class="hello">Mi negocio</p>
+      <h1>Yapes del día</h1>
     </div>
+    <p id="fecha" class="fecha"></p>
+  </header>
 
-    <div>
-      <span>TOTAL</span>
-      <strong>S/ <span id="resumenDinero">0.00</span></strong>
-    </div>
+  <main>
 
-  </div>
+    <!-- ===== INICIO ===== -->
+    <section class="view active" id="view-inicio">
 
-  <h2>REGISTROS</h2>
+      <div class="balance">
+        <span class="balance-label">Dinero recibido hoy</span>
+        <div class="balance-amount"><small>S/</small> <span id="dinero">0.00</span></div>
+        <div class="balance-foot">
+          <div class="pill"><span id="contador">0</span> yapes</div>
+          <div class="pill soft">Promedio S/ <span id="promedio">0.00</span></div>
+        </div>
+      </div>
 
-  <ul id="lista"></ul>
+      <div class="card">
+        <label class="field-label" for="monto">Monto del Yape</label>
+        <div class="amount-box">
+          <span>S/</span>
+          <input id="monto" type="number" inputmode="decimal" placeholder="0.00" step="0.01" min="0">
+        </div>
 
-  <button id="reiniciar">REINICIAR DÍA</button>
+        <div class="quick">
+          <button type="button" data-quick="5">+5</button>
+          <button type="button" data-quick="10">+10</button>
+          <button type="button" data-quick="20">+20</button>
+          <button type="button" data-quick="50">+50</button>
+        </div>
 
-  <button id="exportar">EXPORTAR DÍA</button>
+        <button id="sumar" class="btn primary">+ YAPE</button>
 
-  <button id="historial">📅 VER HISTORIAL</button>
+        <div class="row">
+          <button id="restar" class="btn ghost">− Devolución</button>
+          <button id="deshacer" class="btn ghost">↩ Deshacer</button>
+        </div>
+      </div>
 
-  <div id="historialLista"></div>
+      <div class="stats resumen">
+        <div>
+          <span>Yapes</span>
+          <strong id="resumenYapes">0</strong>
+        </div>
+        <div>
+          <span>Total</span>
+          <strong>S/ <span id="resumenDinero">0.00</span></strong>
+        </div>
+      </div>
 
+      <p class="mini">Total de Yapes: <span id="total">0</span></p>
+
+    </section>
+
+    <!-- ===== REGISTROS ===== -->
+    <section class="view" id="view-registros">
+      <h2>Registros de hoy</h2>
+      <ul id="lista"></ul>
+    </section>
+
+    <!-- ===== HISTORIAL ===== -->
+    <section class="view" id="view-historial">
+      <h2>Historial</h2>
+      <div id="historialLista"></div>
+    </section>
+
+    <!-- ===== AJUSTES ===== -->
+    <section class="view" id="view-ajustes">
+      <h2>Ajustes</h2>
+      <div class="card list-actions">
+        <button id="modoOscuro" class="item">🌙 Modo oscuro</button>
+        <button id="exportar" class="item">📤 Exportar día</button>
+        <button id="reiniciar" class="item danger">🗑️ Reiniciar día</button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Menú inferior -->
+  <nav class="tabbar">
+    <button class="tab active" data-tab="inicio">
+      <svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>
+      <span>Inicio</span>
+    </button>
+    <button class="tab" data-tab="registros">
+      <svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+      <span>Registros</span>
+    </button>
+    <button class="tab" data-tab="historial">
+      <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>
+      <span>Historial</span>
+    </button>
+    <button class="tab" data-tab="ajustes">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+      <span>Ajustes</span>
+    </button>
+  </nav>
+
+  <div id="toast" class="toast"></div>
 </div>
+
+<script src="./script.js"></script>
+</body>
+</html>
