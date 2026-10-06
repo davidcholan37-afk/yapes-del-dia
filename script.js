@@ -256,5 +256,9 @@ modoOscuro.addEventListener("click", function () {
 
   actualizar();
   mostrarHistorial();
+const modoOscuro = document.getElementById("modoOscuro");
 
+modoOscuro.addEventListener("click", function () {
+  document.body.classList.toggle("oscuro");
+});
 });
