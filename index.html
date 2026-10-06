@@ -4,241 +4,316 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#5b21b6">
+  <meta name="description" content="Anota tus Yapes, ventas en efectivo y pagos a proveedores, y cuadra tu caja cada día.">
   <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Arqueo">
   <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon-192.png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <link rel="stylesheet" href="./style.css?v=3">
+  <link rel="stylesheet" href="./style.css?v=4">
   <title>Arqueo del Día</title>
 </head>
-<body>
+<body class="locked-boot">
 
-<div class="app">
+<!-- ===== Íconos (se reutilizan en toda la app) ===== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-phone" viewBox="0 0 24 24"><rect x="6.5" y="2.5" width="11" height="19" rx="3"/><path d="M10.5 18.5h3"/></symbol>
+  <symbol id="i-cash" viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="12" rx="3"/><circle cx="12" cy="12" r="2.7"/><path d="M6 12h.01M18 12h.01"/></symbol>
+  <symbol id="i-out" viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></symbol>
+  <symbol id="i-refund" viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01"/></symbol>
+  <symbol id="i-calc" viewBox="0 0 24 24"><rect x="4" y="2.5" width="16" height="19" rx="3"/><path d="M8 7h8M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 16.5h.01M12 16.5h.01M15.5 16.5h.01"/></symbol>
+  <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5.5" cy="12" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="18.5" cy="12" r="1.2"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4.5" y="10.5" width="15" height="10.5" rx="3"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5M12 15v2"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24"><path d="M12 15V3M8 7l4-4 4 4"/><path d="M5 12v6a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3v-6"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12M8 11l4 4 4-4"/><path d="M5 19h14"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 15V3M8 7l4-4 4 4"/><path d="M5 19h14"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.2 5.2l1.4 1.4M17.4 17.4l1.4 1.4M5.2 18.8l1.4-1.4M17.4 6.6l1.4-1.4"/></symbol>
+  <symbol id="i-install" viewBox="0 0 24 24"><rect x="6.5" y="2.5" width="11" height="19" rx="3"/><path d="M12 7v7M9 11.5l3 3 3-3"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M21 5H9l-6 7 6 7h12a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1z"/><path d="m13 9.5 5 5M18 9.5l-5 5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4.5 6v5.5c0 4.6 3.1 8.2 7.5 9.5 4.4-1.3 7.5-4.9 7.5-9.5V6z"/><path d="m9 12 2.2 2.2L15.5 10"/></symbol>
+  <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M4 7.5A2.5 2.5 0 0 1 6.5 5H18v3"/><rect x="3" y="7.5" width="18" height="13" rx="3"/><path d="M16.5 14h2"/></symbol>
+</svg>
 
-  <header class="topbar">
-    <div>
-      <p id="fecha" class="fecha"></p>
-      <h1>Arqueo del día</h1>
+<!-- ===== Pantalla de clave ===== -->
+<div id="lock" class="lock" hidden>
+  <div class="lock-card">
+    <svg class="lock-art" viewBox="0 0 160 140" aria-hidden="true">
+      <circle cx="80" cy="70" r="62" fill="rgba(255,255,255,.08)"/>
+      <circle cx="80" cy="70" r="44" fill="rgba(255,255,255,.1)"/>
+      <path d="M80 22 40 38v28c0 24 17 42 40 50 23-8 40-26 40-50V38z" fill="#fff"/>
+      <path d="M80 22 40 38v28c0 24 17 42 40 50z" fill="#ede9fe"/>
+      <rect x="64" y="60" width="32" height="26" rx="7" fill="#7c3aed"/>
+      <path d="M70 60v-6a10 10 0 0 1 20 0v6" fill="none" stroke="#7c3aed" stroke-width="6" stroke-linecap="round"/>
+      <circle cx="80" cy="72" r="3.5" fill="#fff"/>
+      <circle cx="28" cy="34" r="4" fill="#fde047"/><circle cx="136" cy="100" r="5" fill="#fde047" opacity=".8"/><circle cx="128" cy="28" r="3" fill="#fff" opacity=".7"/>
+    </svg>
+    <h2 id="lockTitle">Ingresa tu clave</h2>
+    <p id="lockSub" class="lock-sub"></p>
+    <div id="lockDots" class="dots"><i></i><i></i><i></i><i></i></div>
+    <p id="lockMsg" class="lock-msg"></p>
+    <div id="lockPad" class="keypad pin"></div>
+    <div class="lock-links">
+      <button id="lockCancel" class="link-light" type="button">Cancelar</button>
+      <button id="lockForgot" class="link-light" type="button">¿Olvidaste tu clave?</button>
     </div>
-    <button id="btnMas" class="icon-btn" aria-label="Más opciones">
-      <svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg>
-    </button>
-  </header>
-
-  <main>
-
-    <!-- ===== INICIO ===== -->
-    <section class="view active" id="view-inicio">
-
-      <div class="balance">
-        <span class="balance-label">Ventas del día</span>
-        <div class="balance-amount"><small>S/</small> <span id="ventasTotal">0.00</span></div>
-        <div class="balance-foot">
-          <div class="pill"><span id="nVentas">0</span> ventas</div>
-          <div class="pill soft">Resultado S/ <span id="resultado">0.00</span></div>
-        </div>
-      </div>
-
-      <div class="grid4">
-        <div class="mini-card"><span class="dot yape"></span><small>Yapes</small><b>S/ <span id="miYape">0.00</span></b></div>
-        <div class="mini-card"><span class="dot cash"></span><small>Efectivo</small><b>S/ <span id="miEfectivo">0.00</span></b></div>
-        <div class="mini-card"><span class="dot out"></span><small>Pagos</small><b>S/ <span id="miPagos">0.00</span></b></div>
-        <div class="mini-card"><span class="dot box"></span><small>En caja</small><b>S/ <span id="miCaja">0.00</span></b></div>
-      </div>
-
-      <h2>Movimientos de hoy</h2>
-      <ul id="lista"></ul>
-    </section>
-
-    <!-- ===== YAPES ===== -->
-    <section class="view" id="view-yapes">
-      <h2>Yapes</h2>
-
-      <div class="card">
-        <div class="chips">
-          <div class="chip"><span id="contador">0</span> yapes</div>
-          <div class="chip soft">S/ <span id="dinero">0.00</span></div>
-        </div>
-
-        <label class="field-label" for="monto">Monto del Yape</label>
-        <div class="amount-box">
-          <span>S/</span>
-          <input id="monto" type="number" inputmode="decimal" placeholder="0.00" step="0.01" min="0">
-        </div>
-        <input id="notaYape" class="text-input" type="text" placeholder="Nota (opcional): almuerzo, pedido de Ana…" maxlength="60">
-
-        <div class="quick">
-          <button type="button" data-quick="5" data-target="monto">+5</button>
-          <button type="button" data-quick="10" data-target="monto">+10</button>
-          <button type="button" data-quick="20" data-target="monto">+20</button>
-          <button type="button" data-quick="50" data-target="monto">+50</button>
-        </div>
-
-        <button id="sumar" class="btn primary">+ YAPE</button>
-        <div class="row">
-          <button id="restar" class="btn ghost">− Devolución</button>
-          <button id="deshacer" class="btn ghost">↩ Deshacer</button>
-        </div>
-      </div>
-
-      <p class="mini">Total de Yapes: <span id="total">0</span></p>
-    </section>
-
-    <!-- ===== EFECTIVO ===== -->
-    <section class="view" id="view-efectivo">
-      <h2>Ventas en efectivo</h2>
-
-      <div class="card">
-        <label class="field-label" for="apertura">Caja inicial (sencillo con el que abres)</label>
-        <div class="amount-box small">
-          <span>S/</span>
-          <input id="apertura" type="number" inputmode="decimal" placeholder="0.00" step="0.01" min="0">
-        </div>
-      </div>
-
-      <div class="card">
-        <label class="field-label" for="montoEfectivo">Venta en efectivo</label>
-        <div class="amount-box">
-          <span>S/</span>
-          <input id="montoEfectivo" type="number" inputmode="decimal" placeholder="0.00" step="0.01" min="0">
-        </div>
-        <input id="notaEfectivo" class="text-input" type="text" placeholder="Nota (opcional)" maxlength="60">
-
-        <div class="quick">
-          <button type="button" data-quick="5" data-target="montoEfectivo">+5</button>
-          <button type="button" data-quick="10" data-target="montoEfectivo">+10</button>
-          <button type="button" data-quick="20" data-target="montoEfectivo">+20</button>
-          <button type="button" data-quick="50" data-target="montoEfectivo">+50</button>
-        </div>
-
-        <button id="sumarEfectivo" class="btn primary cash">+ VENTA EN EFECTIVO</button>
-        <button id="deshacerEfectivo" class="btn ghost">↩ Deshacer última venta</button>
-      </div>
-
-      <p class="mini">Ventas en efectivo hoy: S/ <span id="totalEfectivo">0.00</span> (<span id="nEfectivo">0</span>)</p>
-    </section>
-
-    <!-- ===== PAGOS ===== -->
-    <section class="view" id="view-pagos">
-      <h2>Pagos a proveedores</h2>
-
-      <div class="card">
-        <label class="field-label" for="proveedor">Proveedor</label>
-        <input id="proveedor" class="text-input" type="text" list="proveedores" placeholder="Ej: Distribuidora Lima" maxlength="40" autocomplete="off">
-        <datalist id="proveedores"></datalist>
-
-        <label class="field-label" for="montoPago">Monto pagado</label>
-        <div class="amount-box">
-          <span>S/</span>
-          <input id="montoPago" type="number" inputmode="decimal" placeholder="0.00" step="0.01" min="0">
-        </div>
-
-        <label class="field-label">¿Cómo pagaste?</label>
-        <div class="segmented">
-          <label><input type="radio" name="metodo" value="efectivo" checked><span>💵 Efectivo</span></label>
-          <label><input type="radio" name="metodo" value="yape"><span>📱 Yape / Transf.</span></label>
-        </div>
-
-        <input id="notaPago" class="text-input" type="text" placeholder="Nota (opcional): factura, mercadería…" maxlength="60">
-
-        <button id="registrarPago" class="btn primary out">REGISTRAR PAGO</button>
-        <button id="deshacerPago" class="btn ghost">↩ Deshacer último pago</button>
-      </div>
-
-      <div class="stats">
-        <div><span>Pagado en efectivo</span><strong>S/ <span id="pagosEf">0.00</span></strong></div>
-        <div><span>Pagado digital</span><strong>S/ <span id="pagosDig">0.00</span></strong></div>
-      </div>
-
-      <h2>Por proveedor</h2>
-      <div id="resumenProv"></div>
-    </section>
-
-    <!-- ===== ARQUEO ===== -->
-    <section class="view" id="view-arqueo">
-      <h2>Arqueo de caja</h2>
-
-      <div class="card">
-        <p class="card-title">Efectivo que debería haber</p>
-        <div class="line"><span>Caja inicial</span><b>S/ <span id="arqApertura">0.00</span></b></div>
-        <div class="line plus"><span>+ Ventas en efectivo</span><b>S/ <span id="arqEfectivo">0.00</span></b></div>
-        <div class="line minus"><span>− Pagos en efectivo</span><b>S/ <span id="arqPagos">0.00</span></b></div>
-        <div class="line total"><span>= Esperado en caja</span><b>S/ <span id="arqEsperado">0.00</span></b></div>
-      </div>
-
-      <div class="card">
-        <p class="card-title">Cuenta tu efectivo</p>
-        <div id="denoms"></div>
-        <div class="line total"><span>Total contado</span><b>S/ <span id="arqContado">0.00</span></b></div>
-        <button id="limpiarConteo" class="btn ghost">Limpiar conteo</button>
-      </div>
-
-      <div id="arqResultado" class="res">Cuenta tu efectivo para ver el resultado</div>
-
-      <div class="card">
-        <p class="card-title">Verifica tus Yapes</p>
-        <div class="line"><span>Registrado en esta app</span><b>S/ <span id="yapeRegistrado">0.00</span></b></div>
-        <label class="field-label" for="yapeApp">Total que ves en tu app de Yape</label>
-        <div class="amount-box small">
-          <span>S/</span>
-          <input id="yapeApp" type="number" inputmode="decimal" placeholder="0.00" step="0.01" min="0">
-        </div>
-        <div id="yapeResultado" class="res small"></div>
-      </div>
-
-      <div class="card">
-        <p class="card-title">Resultado del día</p>
-        <div class="line plus"><span>Ventas (Yape + efectivo)</span><b>S/ <span id="resVentas">0.00</span></b></div>
-        <div class="line minus"><span>Pagos a proveedores</span><b>S/ <span id="resPagos">0.00</span></b></div>
-        <div class="line total"><span>= Resultado</span><b>S/ <span id="resFinal">0.00</span></b></div>
-      </div>
-
-      <button id="compartir" class="btn primary">📤 Compartir resumen del día</button>
-    </section>
-
-    <!-- ===== MÁS ===== -->
-    <section class="view" id="view-mas">
-      <h2>Historial</h2>
-      <div id="historialLista"></div>
-
-      <h2>Ajustes</h2>
-      <div class="card list-actions">
-        <button id="modoOscuro" class="item">🌙 Modo oscuro</button>
-        <button id="exportar" class="item">📊 Exportar día (Excel)</button>
-        <button id="respaldar" class="item">💾 Descargar copia de seguridad</button>
-        <button id="restaurar" class="item">📥 Restaurar copia de seguridad</button>
-        <input id="archivoRespaldo" type="file" accept="application/json,.json" hidden>
-        <button id="reiniciar" class="item danger">🗑️ Reiniciar día</button>
-      </div>
-    </section>
-
-  </main>
-
-  <nav class="tabbar">
-    <button class="tab active" data-tab="inicio">
-      <svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>
-      <span>Inicio</span>
-    </button>
-    <button class="tab" data-tab="yapes">
-      <svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18h2"/></svg>
-      <span>Yapes</span>
-    </button>
-    <button class="tab" data-tab="efectivo">
-      <svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2.5"/><circle cx="12" cy="12" r="2.5"/></svg>
-      <span>Efectivo</span>
-    </button>
-    <button class="tab" data-tab="pagos">
-      <svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg>
-      <span>Pagos</span>
-    </button>
-    <button class="tab" data-tab="arqueo">
-      <svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="3"/><path d="M8 7h8M8 12h.01M12 12h.01M16 12h.01M8 17h.01M12 17h.01M16 17h.01"/></svg>
-      <span>Arqueo</span>
-    </button>
-  </nav>
-
-  <div id="toast" class="toast"></div>
+  </div>
 </div>
 
-<script src="./script.js?v=3"></script>
+<div class="shell" id="shell">
+
+  <!-- ===== Menú (abajo en celular, a la izquierda en computadora) ===== -->
+  <nav class="nav">
+    <div class="brand">
+      <img src="icon-192.png" alt="" width="40" height="40">
+      <div><b>Arqueo</b><small>del día</small></div>
+    </div>
+    <button class="tab active" data-tab="inicio" type="button"><svg class="ic"><use href="#i-home"/></svg><span>Inicio</span></button>
+    <button class="tab" data-tab="movimientos" type="button"><svg class="ic"><use href="#i-list"/></svg><span>Movimientos</span></button>
+    <button class="tab" data-tab="arqueo" type="button"><svg class="ic"><use href="#i-calc"/></svg><span>Arqueo</span></button>
+    <button class="tab" data-tab="mas" type="button"><svg class="ic"><use href="#i-more"/></svg><span>Más</span></button>
+  </nav>
+
+  <div class="content">
+
+    <header class="topbar">
+      <div>
+        <p id="saludo" class="hello">Hola 👋</p>
+        <h1 id="tituloVista">Resumen</h1>
+      </div>
+      <label id="dateChip" class="datechip" title="Cambiar fecha">
+        <svg class="ic"><use href="#i-cal"/></svg>
+        <span id="fecha">Hoy</span>
+        <svg class="ic sm"><use href="#i-chev"/></svg>
+        <input id="fechaInput" type="date" aria-label="Elegir fecha">
+      </label>
+    </header>
+
+    <div id="banner" class="banner" hidden>
+      <span>Estás viendo <b id="bannerFecha"></b></span>
+      <button id="volverHoy" type="button">Volver a hoy</button>
+    </div>
+
+    <main>
+
+      <!-- ===== INICIO ===== -->
+      <section class="view active" id="view-inicio">
+
+        <div class="hero">
+          <svg class="hero-art" viewBox="0 0 400 220" preserveAspectRatio="xMaxYMid slice" aria-hidden="true">
+            <circle cx="350" cy="30" r="110" fill="rgba(255,255,255,.09)"/>
+            <circle cx="390" cy="190" r="80" fill="rgba(255,255,255,.07)"/>
+            <path d="M0 190c60-40 110 20 180-10s120-50 220-10V220H0z" fill="rgba(255,255,255,.07)"/>
+            <rect x="300" y="20" width="44" height="32" rx="7" fill="rgba(253,224,71,.85)"/>
+            <path d="M300 36h44M318 20v32" stroke="rgba(180,83,9,.55)" stroke-width="2"/>
+          </svg>
+          <div class="hero-top"><span>Ventas del día</span><span id="heroBadge" class="badge">Hoy</span></div>
+          <div class="hero-amount"><small>S/</small><span id="ventasTotal">0.00</span></div>
+          <div class="hero-stats">
+            <div><small><i class="dotc yape"></i>Yapes</small><b>S/ <span id="miYape">0.00</span></b></div>
+            <div><small><i class="dotc cash"></i>Efectivo</small><b>S/ <span id="miEfectivo">0.00</span></b></div>
+            <div><small><i class="dotc out"></i>Pagos</small><b>S/ <span id="miPagos">0.00</span></b></div>
+          </div>
+          <div class="hero-foot"><span>Efectivo esperado en caja</span><b>S/ <span id="miCaja">0.00</span></b></div>
+        </div>
+
+        <div class="actions">
+          <button class="action yape" data-act="yape" type="button">
+            <span class="aico"><svg class="ic"><use href="#i-phone"/></svg></span>
+            <span class="atxt"><b>Recibí un Yape</b><small>Anotar ingreso</small></span>
+          </button>
+          <button class="action cash" data-act="efectivo" type="button">
+            <span class="aico"><svg class="ic"><use href="#i-cash"/></svg></span>
+            <span class="atxt"><b>Vendí en efectivo</b><small>Anotar venta</small></span>
+          </button>
+          <button class="action out" data-act="pago" type="button">
+            <span class="aico"><svg class="ic"><use href="#i-out"/></svg></span>
+            <span class="atxt"><b>Pagué a proveedor</b><small>Anotar salida</small></span>
+          </button>
+        </div>
+
+        <div class="strip">
+          <div><small>Resultado del día</small><b>S/ <span id="resultado">0.00</span></b></div>
+          <div><small>Ventas anotadas</small><b><span id="nVentas">0</span></b></div>
+        </div>
+
+        <div class="recents">
+          <div class="section-head"><h2>Últimos movimientos</h2><button class="link" data-go="movimientos" type="button">Ver todo</button></div>
+          <ul id="listaRecientes" class="mov-list"></ul>
+        </div>
+      </section>
+
+      <!-- ===== MOVIMIENTOS ===== -->
+      <section class="view" id="view-movimientos">
+        <div class="filters" id="filtros">
+          <button class="fbtn active" data-f="todos" type="button">Todos</button>
+          <button class="fbtn" data-f="yape" type="button">Yapes</button>
+          <button class="fbtn" data-f="efectivo" type="button">Efectivo</button>
+          <button class="fbtn" data-f="pago" type="button">Pagos</button>
+        </div>
+        <div id="resumenFiltro" class="filter-sum"></div>
+        <ul id="lista" class="mov-list"></ul>
+        <div id="provBox" hidden>
+          <div class="section-head"><h2>Por proveedor</h2></div>
+          <div id="resumenProv" class="prov-list"></div>
+        </div>
+      </section>
+
+      <!-- ===== ARQUEO ===== -->
+      <section class="view" id="view-arqueo">
+        <div class="cols">
+          <div class="col">
+            <div class="card">
+              <p class="card-title">Caja inicial</p>
+              <p class="hint">El sencillo con el que abriste hoy.</p>
+              <div class="amount-box">
+                <span>S/</span>
+                <input id="apertura" type="number" inputmode="decimal" placeholder="0.00" step="0.01" min="0">
+              </div>
+            </div>
+
+            <div class="card">
+              <p class="card-title">Efectivo que debería haber</p>
+              <div class="line"><span>Caja inicial</span><b>S/ <span id="arqApertura">0.00</span></b></div>
+              <div class="line plus"><span>+ Ventas en efectivo</span><b>S/ <span id="arqEfectivo">0.00</span></b></div>
+              <div class="line minus"><span>− Pagos en efectivo</span><b>S/ <span id="arqPagos">0.00</span></b></div>
+              <div class="line total"><span>= Esperado en caja</span><b>S/ <span id="arqEsperado">0.00</span></b></div>
+            </div>
+
+            <div class="card">
+              <p class="card-title">Cuenta tu efectivo</p>
+              <p class="hint">Toca + por cada billete o moneda que tengas.</p>
+              <div id="denoms"></div>
+              <div class="line total"><span>Total contado</span><b>S/ <span id="arqContado">0.00</span></b></div>
+              <button id="limpiarConteo" class="btn ghost" type="button">Limpiar conteo</button>
+            </div>
+          </div>
+
+          <div class="col">
+            <div id="arqResultado" class="res">Cuenta tu efectivo para ver el resultado</div>
+
+            <div class="card">
+              <p class="card-title">Verifica tus Yapes</p>
+              <div class="line"><span>Registrado en esta app</span><b>S/ <span id="yapeRegistrado">0.00</span></b></div>
+              <label class="field-label" for="yapeApp">Total que ves en tu app de Yape</label>
+              <div class="amount-box">
+                <span>S/</span>
+                <input id="yapeApp" type="number" inputmode="decimal" placeholder="0.00" step="0.01" min="0">
+              </div>
+              <div id="yapeResultado" class="res small"></div>
+            </div>
+
+            <div class="card">
+              <p class="card-title">Resultado del día</p>
+              <div class="line plus"><span>Ventas (Yape + efectivo)</span><b>S/ <span id="resVentas">0.00</span></b></div>
+              <div class="line minus"><span>Pagos a proveedores</span><b>S/ <span id="resPagos">0.00</span></b></div>
+              <div class="line total"><span>= Resultado</span><b>S/ <span id="resFinal">0.00</span></b></div>
+            </div>
+
+            <button id="compartir" class="btn primary" type="button"><svg class="ic"><use href="#i-share"/></svg>Compartir resumen del día</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== MÁS ===== -->
+      <section class="view" id="view-mas">
+        <div class="cols">
+          <div class="col">
+            <div class="section-head"><h2>Historial</h2></div>
+            <div id="mesResumen" class="month"></div>
+            <div id="historialLista" class="hist"></div>
+          </div>
+
+          <div class="col">
+            <div class="section-head"><h2>Seguridad</h2></div>
+            <div class="card list-actions">
+              <button id="btnClave" class="item" type="button"><svg class="ic"><use href="#i-lock"/></svg><span>Activar clave de acceso</span></button>
+              <button id="btnCambiar" class="item" type="button" hidden><svg class="ic"><use href="#i-shield"/></svg><span>Cambiar clave</span></button>
+              <button id="btnBloquear" class="item" type="button" hidden><svg class="ic"><use href="#i-lock"/></svg><span>Bloquear ahora</span></button>
+              <button id="btnQuitar" class="item danger" type="button" hidden><svg class="ic"><use href="#i-trash"/></svg><span>Quitar clave</span></button>
+            </div>
+
+            <div class="section-head"><h2>Aplicación</h2></div>
+            <div class="card list-actions">
+              <button id="modoOscuro" class="item" type="button"><svg class="ic"><use href="#i-moon"/></svg><span>Modo oscuro</span></button>
+              <button id="instalar" class="item" type="button"><svg class="ic"><use href="#i-install"/></svg><span>Instalar en este dispositivo</span></button>
+            </div>
+
+            <div class="section-head"><h2>Datos</h2></div>
+            <div class="card list-actions">
+              <button id="exportar" class="item" type="button"><svg class="ic"><use href="#i-download"/></svg><span>Exportar día (Excel)</span></button>
+              <button id="respaldar" class="item" type="button"><svg class="ic"><use href="#i-download"/></svg><span>Descargar copia de seguridad</span></button>
+              <button id="restaurar" class="item" type="button"><svg class="ic"><use href="#i-upload"/></svg><span>Restaurar copia de seguridad</span></button>
+              <input id="archivoRespaldo" type="file" accept="application/json,.json" hidden>
+              <button id="reiniciar" class="item danger" type="button"><svg class="ic"><use href="#i-trash"/></svg><span>Reiniciar este día</span></button>
+            </div>
+            <p class="footnote">Tus datos se guardan solo en este dispositivo. Descarga una copia de seguridad de vez en cuando.</p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<!-- ===== Hoja para anotar un movimiento ===== -->
+<div id="sheet" class="sheet" hidden>
+  <div class="sheet-backdrop" data-close></div>
+  <div class="sheet-panel" role="dialog" aria-modal="true" aria-labelledby="sheetTitulo">
+    <div class="grab"></div>
+    <div class="sheet-head">
+      <span id="sheetIco" class="mico yape"></span>
+      <div><h3 id="sheetTitulo">Recibí un Yape</h3><small id="sheetSub">Escribe el monto</small></div>
+      <button class="x" data-close type="button" aria-label="Cerrar">✕</button>
+    </div>
+
+    <div class="amount-display"><span>S/</span><b id="sheetAmount">0</b></div>
+
+    <div id="sheetQuick" class="quick">
+      <button type="button" data-q="5">+5</button>
+      <button type="button" data-q="10">+10</button>
+      <button type="button" data-q="20">+20</button>
+      <button type="button" data-q="50">+50</button>
+    </div>
+
+    <div id="rowProv" class="extra" hidden>
+      <input id="proveedor" class="text-input" type="text" list="proveedores" placeholder="Proveedor (Ej: Distribuidora Lima)" maxlength="40" autocomplete="off">
+      <datalist id="proveedores"></datalist>
+      <div class="segmented">
+        <label><input type="radio" name="metodo" value="efectivo" checked><span>💵 Efectivo</span></label>
+        <label><input type="radio" name="metodo" value="yape"><span>📱 Yape / Transf.</span></label>
+      </div>
+    </div>
+
+    <label id="rowDevol" class="switch" hidden>
+      <input id="esDevol" type="checkbox"><span class="sw"></span><span>Es una devolución (resta)</span>
+    </label>
+
+    <input id="notaSheet" class="text-input" type="text" placeholder="Nota (opcional)" maxlength="60">
+
+    <div id="keypad" class="keypad"></div>
+
+    <button id="sheetOk" class="btn primary" type="button">Registrar</button>
+  </div>
+</div>
+
+<!-- ===== Aviso ===== -->
+<div id="toast" class="toast" role="status">
+  <span id="toastMsg"></span>
+  <button id="toastAct" class="toast-act" type="button" hidden>Deshacer</button>
+</div>
+
+<script src="./script.js?v=4"></script>
+<script>
+  // Si por algún motivo el script principal no carga, no dejes la pantalla en blanco.
+  setTimeout(function () { if (!window.__arqueoOK) document.body.classList.remove("locked-boot"); }, 3000);
+</script>
 </body>
 </html>
