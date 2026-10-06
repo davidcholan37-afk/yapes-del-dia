@@ -142,4 +142,28 @@ h2 {
   font-size: 20px;
   font-weight: bold;
   margin-top: 6px;
+}body.oscuro {
+  background: #121212;
+  color: #f5f5f5;
+}
+
+body.oscuro .app {
+  background: #1e1e1e;
+}
+
+body.oscuro input {
+  background: #2a2a2a;
+  color: white;
+  border-color: #444;
+}
+
+body.oscuro #lista li,
+body.oscuro .resumen div,
+body.oscuro .historial-card {
+  background: #2a2a2a;
+}
+
+body.oscuro #fecha,
+body.oscuro .resumen span {
+  color: #aaa;
 }
