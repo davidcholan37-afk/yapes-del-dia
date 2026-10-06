@@ -376,15 +376,15 @@ button:focus-visible, input:focus-visible, .datechip:focus-within { outline: 3px
 .dots i.on { background: #fff; border-color: #fff; transform: scale(1.1); }
 .dots.shake { animation: shake 0.4s; }
 .lock-msg { min-height: 1.3em; font-size: 0.85rem; font-weight: 700; color: #fecdd3; }
-.keypad.pin { width: 100%; max-width: 300px; gap: 12px; }
-.keypad.pin button { height: 62px; border-radius: 50%; background: rgba(255,255,255,0.14); color: #fff; font-size: 1.6rem; }
+.keypad.pin { width: 100%; max-width: 300px; gap: 14px; justify-items: center; }
+.keypad.pin button { width: 76px; height: 76px; border-radius: 50%; background: rgba(255,255,255,0.14); color: #fff; font-size: 1.7rem; }
 .keypad.pin button:active { background: rgba(255,255,255,0.3); }
 .keypad.pin span { display: block; }
 .lock-links { display: flex; flex-direction: column; gap: 2px; margin-top: 6px; }
 .link-light { background: none; border: none; color: rgba(255,255,255,0.85); font-weight: 700; font-size: 0.88rem; padding: 12px; min-height: 44px; }
 @media (max-height: 700px) {
   .lock-art { width: 90px; }
-  .keypad.pin button { height: 50px; }
+  .keypad.pin button { width: 60px; height: 60px; font-size: 1.45rem; }
   .keypad.pin { gap: 8px; }
 }
 
