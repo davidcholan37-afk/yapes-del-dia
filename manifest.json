@@ -1,0 +1,9 @@
+{
+  "name": "YAPES DEL DÍA",
+  "short_name": "YAPES",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "description": "Registro diario de Yapes"
+}
