@@ -342,6 +342,7 @@
     $("esDevol").checked = false;
     document.querySelector('input[name="metodo"][value="efectivo"]').checked = true;
     pintarMonto();
+    if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
     $("sheet").hidden = false;
     document.body.classList.add("noscroll");
   }
@@ -781,18 +782,19 @@
   document.addEventListener("keydown", (e) => {
     const enTexto = e.target && e.target.matches && e.target.matches('input[type="text"], input[type="number"], input[type="date"]');
     if (!lockEl.hidden) {
-      if (/^[0-9]$/.test(e.key)) teclaPin(e.key);
-      else if (e.key === "Backspace") teclaPin("del");
+      if (/^[0-9]$/.test(e.key)) { e.preventDefault(); teclaPin(e.key); }
+      else if (e.key === "Backspace") { e.preventDefault(); teclaPin("del"); }
       else if (e.key === "Escape" && L.cancelable) ocultarLock();
       return;
     }
     if (!$("sheet").hidden) {
       if (e.key === "Escape") return cerrarSheet();
       if (enTexto) return;
-      if (/^[0-9]$/.test(e.key)) teclaMonto(e.key);
-      else if (e.key === "." || e.key === ",") teclaMonto(".");
-      else if (e.key === "Backspace") teclaMonto("del");
-      else if (e.key === "Enter") $("sheetOk").click();
+      // preventDefault evita que Enter vuelva a "pulsar" el botón que tenía el foco
+      if (/^[0-9]$/.test(e.key)) { e.preventDefault(); teclaMonto(e.key); }
+      else if (e.key === "." || e.key === ",") { e.preventDefault(); teclaMonto("."); }
+      else if (e.key === "Backspace") { e.preventDefault(); teclaMonto("del"); }
+      else if (e.key === "Enter") { e.preventDefault(); $("sheetOk").click(); }
     }
   });
 
@@ -843,3 +845,4 @@
     window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
   }
 })();
+
